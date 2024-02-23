@@ -9,7 +9,7 @@ public class ObjectPool : MonoBehaviour
 
     //Creo un Diccionario Con la cola de objetos [clave = nºdel objeto/almacenamiento de objetos en la cola]
     static Dictionary<int, Queue<GameObject>> pool = new Dictionary<int, Queue<GameObject>>();
-    //Creo un Diccionarrio para que en el Hierachy todos los objetos de la cola esten ordenados[clave = Id del objeto/nºdel objeto]
+    //Creo un Diccionario para que en el Hierachy todos los objetos de la cola esten ordenados[clave = Id del objeto/nºdel objeto]
     static Dictionary<int, GameObject> parents = new Dictionary<int, GameObject>();
 
     void Awake()
@@ -54,7 +54,7 @@ public class ObjectPool : MonoBehaviour
         //creo el objetoCloando desde el ObjetoPrimigeneo
         GameObject go = Instantiate(objectToPool) as GameObject;
         //Le paso el id del padre para poder hacerlo hijo
-        go.transform.SetParent(Getparent(id).transform);
+        go.transform.SetParent(GetParent(id).transform);
         //Los desactivo para que no aparezcan todos de golpe en la pantalla
         go.SetActive(false);
         //lo añado al diccionario pool que es el que uso para operar con los objetos
@@ -63,7 +63,7 @@ public class ObjectPool : MonoBehaviour
     }
 
     //Clase que devuelve el ID del padre (se le pasa como parametro la clave del diccionario)
-    static GameObject Getparent(int parentID)
+    static GameObject GetParent(int parentID)
     {
         //Se crea un GameObject en el qeus e almacena el ID del Padre
         GameObject parent;

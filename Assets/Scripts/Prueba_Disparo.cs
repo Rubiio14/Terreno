@@ -10,7 +10,7 @@ public class Prueba_Disparo : MonoBehaviour
     GameObject balaTipo2;
    
 
-    int Speed = 130;
+    public int Speed = 130;
 
     
 
@@ -46,19 +46,22 @@ public class Prueba_Disparo : MonoBehaviour
 
 
 
-            Rigidbody rb = balaTipo1.GetComponent<Rigidbody>();
+            //Rigidbody rb = balaTipo1.GetComponent<Rigidbody>();
+            Bala1.transform.position = transform.position;
             //Add force to bullet
-            rb.AddForce(transform.TransformDirection(0, 0, 1) * Speed);
+            //rb.AddForce(transform.TransformDirection(0, 0, 1) * Speed);
+            Bala1.transform.position += Vector3.forward * Speed * Time.deltaTime;
             StartCoroutine(Recicle(balaTipo1, Bala1, 2.0f));
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
             GameObject Bala2 = ObjectPool.GetObject(balaTipo2);
 
-            Rigidbody rb_2 = balaTipo2.GetComponent<Rigidbody>();
-
+            //Rigidbody rb_2 = balaTipo2.GetComponent<Rigidbody>();
+            Bala2.transform.position = transform.position;
             //Add force to bullet
-            rb_2.AddForce(transform.TransformDirection(0, 0, 1) * Speed);
+            //rb_2.AddForce(transform.TransformDirection(0, 0, 1) * Speed);
+            Bala2.transform.position += Vector3.forward * Speed * Time.deltaTime;
             StartCoroutine(Recicle(balaTipo2, Bala2, 2.0f));
         }
     }

@@ -6,6 +6,9 @@ using UnityEngine.Rendering;
 
 public class Player_Behavior : MonoBehaviour
 {
+    //Spawn Point
+    [SerializeField]
+    GameObject m_Spawnpoint; 
     //Acceleration
     public float m_NormalSpeed = 50f;
     public float m_Speed = 50f;
@@ -84,7 +87,7 @@ public class Player_Behavior : MonoBehaviour
         if(collision.gameObject.tag == "Terrain")
         {
             Debug.Log("Choca");
-            transform.position = new Vector3(275f,55f,765f);
+            transform.position = m_Spawnpoint.transform.position;
         }
     }
 }
