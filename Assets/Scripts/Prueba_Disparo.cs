@@ -5,6 +5,8 @@ using UnityEngine;
 public class Prueba_Disparo : MonoBehaviour
 {
     [SerializeField]
+    GameObject Muzzle; 
+    [SerializeField]
     GameObject balaTipo1;
     [SerializeField]
     GameObject balaTipo2;
@@ -26,11 +28,21 @@ public class Prueba_Disparo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            Muzzle.SetActive(true);
             Shoot(balaTipo1, m_ScopeDirection);
+        }
+        else if(Input.GetKeyUp(KeyCode.Z))
+        {
+            Muzzle.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
+            Muzzle.SetActive(true);
             Shoot(balaTipo2, m_ScopeDirection);
+        }
+        else if (Input.GetKeyUp(KeyCode.X))
+        {
+            Muzzle.SetActive(false);
         }
     }
    

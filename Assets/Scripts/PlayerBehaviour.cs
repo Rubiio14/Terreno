@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 
 public class Player_Behavior : MonoBehaviour
 {
+    
     //Spawn Point
     [SerializeField]
     GameObject m_Spawnpoint; 
@@ -34,20 +35,25 @@ public class Player_Behavior : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>(); 
         Cursor.lockState = CursorLockMode.Locked;
+       
     }
     void Update()
     {
         MouseLook();
         Movement();
         AccelerationGestioner();
+       
         
     }
     void MouseLook()
     {
+        
         m_Rotation.x += Input.GetAxis("Mouse X") * m_Sens;
         m_Rotation.y += Input.GetAxis("Mouse Y") * m_Sens;
         transform.localRotation = Quaternion.Euler(-m_Rotation.y, m_Rotation.x, 0f);
+        
     }
+   
     
     void Movement()
     {
