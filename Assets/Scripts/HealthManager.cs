@@ -4,48 +4,35 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    private static HealthManager instance;
-    public int m_MaxHealth;
-    public int m_CurrentHealth;
-    // Start is called before the first frame update
-    
+    [SerializeField]
+    public GameEnding gameEnding;
+    [SerializeField]
+    AudioSource m_GameOver;
+    [SerializeField]
+    AudioSource m_AmbientSound;
+    [SerializeField]
+    AudioSource m_audioClipExplosion;
+    [SerializeField]
+    public ParticleSystem m_Explosion;
+    public int m_HitsToDie = 5;
 
-    void Awake()
+    public void RecieveHit()
     {
-        if (instance == null)
+        m_HitsToDie--;
+        if (m_HitsToDie == 0)
         {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
-
-    void Start()
-    {
-        m_CurrentHealth = m_MaxHealth;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (gameObject.CompareTag("Player") && m_CurrentHealth <= 0)
-        {
-            Debug.Log("Game Over");
-            //Poner Fin de juego
-        }
-    }
-    public void TakeDamage(int m_Damage)
-    { 
-        m_CurrentHealth -= m_Damage;
-
-        //Para que la salud no sea negativa
-        m_CurrentHealth = Mathf.Max(m_CurrentHealth, 0);
-
-        if (gameObject.CompareTag("Enemy") && m_CurrentHealth <= 0)
-        {
-            Debug.Log("Destrir enemigo");
+            if (gameObject.tag == "Player")
+            {
+                m_GameOver.Play();
+                m_AmbientSound.Stop();
+                gameEnding.ActivateGameOverScreen();
+                Cursor.lockState = CursorLockMode.None;
+            }
+            
+            
+            m_audioClipExplosion.Play();
+            m_Explosion.transform.position = transform.position;
+            m_Explosion.Play();
             Destroy(gameObject);
         }
     }

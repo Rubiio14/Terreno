@@ -6,13 +6,35 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    public float m_SoundDelayTime;
+    [SerializeField]
+    AudioSource m_ButtonSound;
     public void Play()
     {
+        m_ButtonSound.Play();
         ObjectPool.ClearPool();
-        SceneManager.LoadScene(1);
+        StartCoroutine(SoundDelay_1(m_SoundDelayTime));
+        
     }
     public void Quit()
     {
+        m_ButtonSound.Play();
+        StartCoroutine(SoundDelay_2(m_SoundDelayTime));
+        
+    }
+    IEnumerator SoundDelay_1(float time)
+    {
+
+        yield return new WaitForSeconds(time);
+        SceneManager.LoadScene(1);// Tiempo de espera entre disparos
+
+    }
+    IEnumerator SoundDelay_2(float time)
+    {
+
+        yield return new WaitForSeconds(time);
         UnityEditor.EditorApplication.isPlaying = false;
+        
+
     }
 }

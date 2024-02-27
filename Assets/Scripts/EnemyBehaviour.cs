@@ -4,6 +4,11 @@ using UnityEngine;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
+    public HealthManager m_Healthmanager;
+    [SerializeField]
+    AudioSource m_audioClipShoot;
+
+    [SerializeField]
     GameObject Muzzle;
     [SerializeField]
     GameObject Muzzle_2;
@@ -24,8 +29,7 @@ public class EnemyBehaviour : MonoBehaviour
     GameObject m_BulletPrefab_2;
   
 
-    [SerializeField]
-    public ParticleSystem m_Explosion;
+    
 
     void Start()
     {
@@ -38,6 +42,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (m_Player == null)
         {
+            Patrol();
             return;
         }
 
@@ -96,6 +101,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
     void Shoot()
     {
+        m_audioClipShoot.Play();
         Muzzle.SetActive(true);
         Muzzle_2.SetActive(true);
         
@@ -126,10 +132,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bala")
         {
-
-            m_Explosion.transform.position = transform.position;
-            m_Explosion.Play();
-            Destroy(gameObject);
+            m_Healthmanager.RecieveHit();
         }
     }
 

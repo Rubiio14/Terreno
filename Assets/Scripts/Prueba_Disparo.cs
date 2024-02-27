@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,11 @@ using UnityEngine;
 public class Prueba_Disparo : MonoBehaviour
 {
     [SerializeField]
+    AudioSource m_ShootingEffect;
+    [SerializeField]
     GameObject Muzzle; 
     [SerializeField]
     GameObject balaTipo1;
-    [SerializeField]
-    GameObject balaTipo2;
     [SerializeField]
     GameObject m_ScopeDirection;
 
@@ -20,7 +21,6 @@ public class Prueba_Disparo : MonoBehaviour
     void Start()
     {
         ObjectPool.PreLoad(balaTipo1, 5);
-        ObjectPool.PreLoad(balaTipo2, 7);
     }
 
     // Update is called once per frame
@@ -28,19 +28,11 @@ public class Prueba_Disparo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            m_ShootingEffect.Play();
             Muzzle.SetActive(true);
             Shoot(balaTipo1, m_ScopeDirection);
         }
         else if(Input.GetKeyUp(KeyCode.Z))
-        {
-            Muzzle.SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Muzzle.SetActive(true);
-            Shoot(balaTipo2, m_ScopeDirection);
-        }
-        else if (Input.GetKeyUp(KeyCode.X))
         {
             Muzzle.SetActive(false);
         }
@@ -50,7 +42,7 @@ public class Prueba_Disparo : MonoBehaviour
     {
         GameObject bullet = ObjectPool.GetObject(bulletType);
         bullet.transform.position = transform.position;
-
+        /*
         // Definir el origen del rayo en la posición del objeto especificado
         Vector3 m_RayOrigin = originObject.transform.position;
 
@@ -67,6 +59,8 @@ public class Prueba_Disparo : MonoBehaviour
             // Si el rayo no golpea nada, disparar en la dirección hacia adelante
             bullet.GetComponent<Rigidbody>().velocity = transform.forward * m_BulletSpeed;
         }
+        /
+        bullet.GetComponent<Rigidbody>().velocity = transform.forward * m_BulletSpeed;
         // Obtener la dirección en la que está mirando la nave
         Vector3 direction = transform.forward;
 
@@ -74,7 +68,7 @@ public class Prueba_Disparo : MonoBehaviour
         bullet.GetComponent<Rigidbody>().velocity = direction * m_BulletSpeed;
 
         // Alinear la bala con la dirección de disparo (en el eje Z)
-        bullet.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
+        //bullet.transform.rotation = Quaternion.Euler(90f, transform.eulerAngles.y, 0f);
 
         // Iniciar la rutina de reciclaje de la bala
         StartCoroutine(RecicleObject(bulletType, bullet, 2.0f));
@@ -86,8 +80,59 @@ public class Prueba_Disparo : MonoBehaviour
         yield return new WaitForSeconds(time);
         ObjectPool.RecicleObject(bulletType, bullet);
     }
-    
+}
+*/
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
+public class Prueba_Disparo : MonoBehaviour
+{
+    [SerializeField] AudioSource m_ShootingEffect;
+    [SerializeField] GameObject Muzzle;
+    [SerializeField] GameObject balaTipo1;
+    [SerializeField] GameObject m_ScopeDirection;
+    public float m_BulletSpeed = 10f;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        ObjectPool.PreLoad(balaTipo1, 5);
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            m_ShootingEffect.Play();
+            Muzzle.SetActive(true);
+            Shoot(balaTipo1, m_ScopeDirection);
+        }
+        else if (Input.GetKeyUp(KeyCode.Z))
+        {
+            Muzzle.SetActive(false);
+        }
+    }
+
+    void Shoot(GameObject bulletType, GameObject originObject)
+    {
+        GameObject bullet = ObjectPool.GetObject(bulletType);
+        bullet.transform.position = transform.position;
+
+        // Obtener la dirección hacia donde apunta el jugador
+        Vector3 direction = originObject.transform.forward;
+
+        // Aplicar velocidad a la bala en la dirección del disparo
+        bullet.GetComponent<Rigidbody>().velocity = direction * m_BulletSpeed;
+
+        // Iniciar la rutina de reciclaje de la bala
+        StartCoroutine(RecicleObject(bulletType, bullet, 2.0f));
+    }
+
+    IEnumerator RecicleObject(GameObject bulletType, GameObject bullet, float time)
+    {
+        yield return new WaitForSeconds(time);
+        ObjectPool.RecicleObject(bulletType, bullet);
+    }
 }

@@ -6,7 +6,21 @@ using UnityEngine.Rendering;
 
 public class Player_Behavior : MonoBehaviour
 {
+    //Death
+    [SerializeField]
+    AudioSource m_GameOver;
+    [SerializeField]
+    AudioSource m_AmbientSound;
+    //Life
+    [SerializeField]
+    public HealthManager m_Health;
     
+    //Explosion
+    [SerializeField]
+    AudioSource m_audioClipExplosion;
+    [SerializeField]
+    public ParticleSystem m_Explosion;
+
     //Spawn Point
     [SerializeField]
     GameObject m_Spawnpoint; 
@@ -95,14 +109,21 @@ public class Player_Behavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Bala_enemiga")
+        if(collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("Choca");
+            m_AmbientSound.Stop();
+            m_GameOver.Play();
+            m_audioClipExplosion.Play();
+            m_Explosion.transform.position = transform.position;
+            m_Explosion.Play();
             gameEnding.ActivateGameOverScreen();
-            gameObject.SetActive(false);
+            Destroy(gameObject);
             Cursor.lockState = CursorLockMode.None; // Desbloquea el cursor
-            transform.position = m_Spawnpoint.transform.position;
-            transform.rotation = m_Spawnpoint.transform.rotation;
+            
+        }
+        if (collision.gameObject.tag == "Bala_enemiga")
+        {
+            m_Health.RecieveHit();
         }
     }
 }
