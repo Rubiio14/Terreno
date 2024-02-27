@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     public float m_SoundDelayTime;
     [SerializeField]
     AudioSource m_ButtonSound;
+
+    //Play Button
     public void Play()
     {
         m_ButtonSound.Play();
@@ -16,12 +18,15 @@ public class MainMenu : MonoBehaviour
         StartCoroutine(SoundDelay_1(m_SoundDelayTime));
         
     }
+
+    //Exit Button
     public void Quit()
     {
         m_ButtonSound.Play();
         StartCoroutine(SoundDelay_2(m_SoundDelayTime));
         
     }
+
     IEnumerator SoundDelay_1(float time)
     {
 

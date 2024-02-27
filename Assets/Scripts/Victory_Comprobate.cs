@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class Victory_Comprobate : MonoBehaviour
 {
+    //Enemies Counter
+    [SerializeField]
+    TextMeshProUGUI m_EnemiesLeftLabel;
+    //Audio
     public float m_SoundDelayTime = 0.539f;
     [SerializeField]
     AudioSource m_ButtonSound;
@@ -12,13 +17,16 @@ public class Victory_Comprobate : MonoBehaviour
     AudioSource m_AmbientMusic;
     [SerializeField]
     AudioSource m_VictorySound;
-    [SerializeField]
-    public GameObject m_Spawnpoint;
+    //Player
     public GameObject m_Player;
+    //Canvas
     public GameObject m_VictoryScreen;
+    /*If Enenemies childcount == 0, Shows Victory Canvas*/
     void Update()
     {
+        m_EnemiesLeftLabel.text = transform.childCount.ToString("00") + " Enemies left";
 
+       
         if (transform.childCount == 0 && m_VictoryScreen.activeSelf == false)
         {
             
@@ -30,13 +38,14 @@ public class Victory_Comprobate : MonoBehaviour
 
         }
     }
-
+    /*Reset Button*/
     public void Reiniciar()
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
         StartCoroutine(SoundDelay_1(m_SoundDelayTime));
     }
+    /*Main Menu Button*/
     public void MainMenu()
     {
         m_ButtonSound.Play();

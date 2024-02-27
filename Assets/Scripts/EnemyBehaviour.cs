@@ -3,15 +3,21 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    //Audio
     [SerializeField]
-    public HealthManager m_Healthmanager;
+    public AudioSource m_Hitmarker;
     [SerializeField]
     AudioSource m_audioClipShoot;
-
+    //Health
     [SerializeField]
-    GameObject Muzzle;
+    public HealthManager m_Healthmanager;
+    
+    //Muzzles
     [SerializeField]
-    GameObject Muzzle_2;
+    GameObject m_Muzzle;
+    [SerializeField]
+    GameObject m_Muzzle_2;
+    //Enemy Movement
     public float m_RotationSpeed = 1f;
     public float m_PatrolSpeed = 5f;
     public float m_SpeedPersecution = 10f;
@@ -21,6 +27,7 @@ public class EnemyBehaviour : MonoBehaviour
     private Transform m_Player;
     private int m_CurrentWaypointIndex = 0;
 
+    //Enemy Shot
     [SerializeField]
     GameObject m_BulletPrefab;
     public float m_BulletSpeed = 10f;
@@ -55,11 +62,11 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
-            // Si el jugador no está en el rango de visión, mueve hacia el waypoint
             Patrol();
         }
     }
 
+    /*Chase the player*/
     void Persecution()
     {
         // Si el jugador está dentro del rango de visión, persigue al jugador
@@ -79,7 +86,7 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         
     }
-
+    /*Patrol following a series of waypoints*/
     void Patrol()
     {
         if (m_Waypoints.Length == 0) return;
@@ -99,21 +106,23 @@ public class EnemyBehaviour : MonoBehaviour
 
         }
     }
+    /*Shooting class*/
     void Shoot()
     {
         m_audioClipShoot.Play();
-        Muzzle.SetActive(true);
-        Muzzle_2.SetActive(true);
+        m_Muzzle.SetActive(true);
+        m_Muzzle_2.SetActive(true);
         
-        GameObject m_Bullet = ObjectPool.GetObject(m_BulletPrefab); // Obtener una bala del Object Pool
-        m_Bullet.transform.position = Muzzle.transform.position;
-        Vector3 direction = (m_Player.position - Muzzle.transform.position).normalized;
+        GameObject m_Bullet = ObjectPool.GetObject(m_BulletPrefab); 
+        m_Bullet.transform.position = m_Muzzle.transform.position;
+        Vector3 direction = (m_Player.position - m_Muzzle.transform.position).normalized;
         m_Bullet.GetComponent<Rigidbody>().velocity = direction * m_BulletSpeed;
         StartCoroutine(ResetShoot(m_BulletPrefab, m_Bullet, 2.0f));
-        //CAñon_2
-        GameObject m_Bullet_2 = ObjectPool.GetObject(m_BulletPrefab_2); // Obtener una bala del Object Pool
-        m_Bullet_2.transform.position = Muzzle_2.transform.position;
-        Vector3 direction_2 = (m_Player.position - Muzzle_2.transform.position).normalized;
+
+        //Second Canon
+        GameObject m_Bullet_2 = ObjectPool.GetObject(m_BulletPrefab_2); 
+        m_Bullet_2.transform.position = m_Muzzle_2.transform.position;
+        Vector3 direction_2 = (m_Player.position - m_Muzzle_2.transform.position).normalized;
         m_Bullet_2.GetComponent<Rigidbody>().velocity = direction_2 * m_BulletSpeed;
         StartCoroutine(ResetShoot(m_BulletPrefab_2, m_Bullet_2, 2.0f));
     }
@@ -121,25 +130,26 @@ public class EnemyBehaviour : MonoBehaviour
     IEnumerator ResetShoot(GameObject bulletType, GameObject bullet, float time)
     {
         
-        yield return new WaitForSeconds(0.5f); // Tiempo de espera entre disparos
-        Muzzle.SetActive(false);
-        Muzzle_2.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        m_Muzzle.SetActive(false);
+        m_Muzzle_2.SetActive(false);
         ObjectPool.RecicleObject(bulletType, bullet);
         m_canShoot = true;
     }
 
+    /*Damage Info*/
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bala")
         {
+            m_Hitmarker.Play();
             m_Healthmanager.RecieveHit();
         }
     }
 
-
+    /*Shows Enenmy Vision Range Gizmos in UnityEditor*/
     void OnDrawGizmosSelected()
     {
-        // Dibujar el rango de visión del enemigo en el editor de Unity
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_VisionRange);
     }

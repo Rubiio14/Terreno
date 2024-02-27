@@ -7,8 +7,9 @@ public class Skip_Animation : MonoBehaviour
 {
     [SerializeField]
     private PlayableDirector playableDirector;
-
-    public void Skip(float time) // Función para reproducir la línea de tiempo desde un tiempo específico
+    public float skip = 1200f;
+    /*Skips animation*/
+    public void Skip(float time)
     {
         playableDirector.Play();
         playableDirector.time = time;
@@ -19,7 +20,7 @@ public class Skip_Animation : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Skip(1200f); 
+            Skip(skip); 
         }
     }
 }

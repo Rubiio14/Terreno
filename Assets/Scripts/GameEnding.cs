@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class GameEnding : MonoBehaviour
 {
+     
     public float m_SoundDelayTime = 0.539f;
-    public GameObject gameOverScreen;
-    public GameObject gameOverScreenHUD;
+    public GameObject m_GameOverScreen;
+    public GameObject m_GameOverScreenHUD;
     [SerializeField]
     AudioSource m_ButtonSound;
+    
+
+    /*Reset the game*/
     public void Reiniciar()
     {
         m_ButtonSound.Play();
@@ -18,22 +23,23 @@ public class GameEnding : MonoBehaviour
 
 
     }
+    /*Main Menu button*/
     public void MainMenu()
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
         StartCoroutine(SoundDelay_2(m_SoundDelayTime));
-        
     }
 
 
-    // Método para activar la pantalla de Game Over
+    /*Shows Death Canvas*/
     public void ActivateGameOverScreen()
     {
-        gameOverScreen.SetActive(true);
+        m_GameOverScreen.SetActive(true);
         StartCoroutine(UIDelay(m_SoundDelayTime));
 
     }
+
 
     IEnumerator SoundDelay_1(float time)
     {
@@ -53,7 +59,8 @@ public class GameEnding : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-        gameOverScreenHUD.SetActive(true); ;// Tiempo de espera entre disparos
+        m_GameOverScreenHUD.SetActive(true);// Tiempo de espera entre disparos
 
     }
+
 }

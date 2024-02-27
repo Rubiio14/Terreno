@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bala
   - Bala_enemiga
+  - Border
   layers:
   - Default
   - TransparentFX

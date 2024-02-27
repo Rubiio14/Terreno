@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Desactivate : MonoBehaviour
 {
+    /*This Script manages the bullet life*/
     [SerializeField]
     public GameObject bala;
     private void OnTriggerEnter(Collider col)
