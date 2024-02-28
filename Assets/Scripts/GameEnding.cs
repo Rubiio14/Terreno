@@ -19,8 +19,7 @@ public class GameEnding : MonoBehaviour
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
-        StartCoroutine(SoundDelay_1(m_SoundDelayTime));
-
+        ChangeScene.changeScene(m_SoundDelayTime, 1);
 
     }
     /*Main Menu button*/
@@ -28,7 +27,7 @@ public class GameEnding : MonoBehaviour
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
-        StartCoroutine(SoundDelay_2(m_SoundDelayTime));
+        ChangeScene.changeScene(m_SoundDelayTime, 0);
     }
 
 
@@ -36,26 +35,12 @@ public class GameEnding : MonoBehaviour
     public void ActivateGameOverScreen()
     {
         m_GameOverScreen.SetActive(true);
-        StartCoroutine(UIDelay(m_SoundDelayTime));
+        StartCoroutine(ShowGameOverDelay(m_SoundDelayTime));
 
     }
 
-
-    IEnumerator SoundDelay_1(float time)
-    {
-
-        yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(1);// Tiempo de espera entre disparos
-
-    }
-    IEnumerator SoundDelay_2(float time)
-    {
-
-        yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(0);// Tiempo de espera entre disparos
-
-    }
-    IEnumerator UIDelay(float time)
+    
+    IEnumerator ShowGameOverDelay(float time)
     {
 
         yield return new WaitForSeconds(time);

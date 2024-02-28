@@ -29,7 +29,7 @@ public class EnemyLifeBar : MonoBehaviour
             transform.forward = m_camera.transform.forward;
         }        
     }
-    /*Decrement Life if is necesary*/
+    /*Decrement life if necessary*/
     public void LifeChecker()
     {
         m_LifeBarImage.fillAmount = m_CurrentHealth / m_MaxHealth;

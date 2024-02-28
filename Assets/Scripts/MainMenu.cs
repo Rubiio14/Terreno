@@ -15,8 +15,7 @@ public class MainMenu : MonoBehaviour
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
-        StartCoroutine(SoundDelay_1(m_SoundDelayTime));
-        
+        ChangeScene.changeScene(m_SoundDelayTime, 1);       
     }
 
     //Exit Button
@@ -27,18 +26,12 @@ public class MainMenu : MonoBehaviour
         
     }
 
-    IEnumerator SoundDelay_1(float time)
-    {
-
-        yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(1);// Tiempo de espera entre disparos
-
-    }
     IEnumerator SoundDelay_2(float time)
     {
 
         yield return new WaitForSeconds(time);
         UnityEditor.EditorApplication.isPlaying = false;
+        //Application.Quit();
         
 
     }
