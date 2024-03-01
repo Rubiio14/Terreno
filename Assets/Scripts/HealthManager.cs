@@ -24,10 +24,9 @@ public class HealthManager : MonoBehaviour
     public EnemyLifeBar m_EnemyLifeBar;
    
 
-    /*
+
      
-    Class that takes life from enemies 
-     */
+    ///Class that takes life from enemies 
     public void RecieveHit()
     {
         m_HitsToDie -= m_Damage;
@@ -35,7 +34,7 @@ public class HealthManager : MonoBehaviour
 
         if (m_HitsToDie == 0f)
         {
-            //Only for Player Death
+            ///Only for Player Death
             if (gameObject.tag == "Player")
             {
                 m_GameOver.Play();

@@ -118,7 +118,7 @@ public class Player_Behavior : MonoBehaviour
             m_Explosion.Play();
             gameEnding.ActivateGameOverScreen();
             Destroy(gameObject);
-            Cursor.lockState = CursorLockMode.None; // Desbloquea el cursor
+            Cursor.lockState = CursorLockMode.None; 
             
         }
         if (collision.gameObject.tag == "Bala_enemiga")

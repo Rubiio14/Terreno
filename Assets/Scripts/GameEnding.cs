@@ -14,7 +14,7 @@ public class GameEnding : MonoBehaviour
     AudioSource m_ButtonSound;
     
 
-    /*Reset the game*/
+    ///Reset the game
     public void Reiniciar()
     {
         m_ButtonSound.Play();
@@ -22,7 +22,7 @@ public class GameEnding : MonoBehaviour
         ChangeScene.changeScene(m_SoundDelayTime, 1);
 
     }
-    /*Main Menu button*/
+    ///Main Menu button
     public void MainMenu()
     {
         m_ButtonSound.Play();
@@ -31,7 +31,7 @@ public class GameEnding : MonoBehaviour
     }
 
 
-    /*Shows Death Canvas*/
+    ///Shows Death Canvas
     public void ActivateGameOverScreen()
     {
         m_GameOverScreen.SetActive(true);
@@ -44,7 +44,7 @@ public class GameEnding : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-        m_GameOverScreenHUD.SetActive(true);// Tiempo de espera entre disparos
+        m_GameOverScreenHUD.SetActive(true);
 
     }
 

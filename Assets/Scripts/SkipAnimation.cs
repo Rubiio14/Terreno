@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class Skip_Animation : MonoBehaviour
+public class SkipAnimation : MonoBehaviour
 {
     [SerializeField]
     private PlayableDirector playableDirector;
     public float skip = 1200f;
-    /*Skips animation*/
+    ///Skips animation
     public void Skip(float time)
     {
         playableDirector.Play();

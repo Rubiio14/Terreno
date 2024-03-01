@@ -23,13 +23,13 @@ public class EnemyLifeBar : MonoBehaviour
     void Update()
     {
         LifeChecker();
-        /*LifeBar follows camera*/
+        ///LifeBar follows camera
         if (gameObject.tag == "Enemy")
         {
             transform.forward = m_camera.transform.forward;
         }        
     }
-    /*Decrement life if necessary*/
+    ///Decrement life if necessary
     public void LifeChecker()
     {
         m_LifeBarImage.fillAmount = m_CurrentHealth / m_MaxHealth;

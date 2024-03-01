@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Prueba_Disparo : MonoBehaviour
+public class ShootingMechanics : MonoBehaviour
 {
     //Audio
     [SerializeField] AudioSource m_ShootingEffect;
@@ -13,7 +13,7 @@ public class Prueba_Disparo : MonoBehaviour
     [SerializeField] GameObject m_ScopeDirection;
     public float m_BulletSpeed = 10f;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         ObjectPool.PreLoad(m_Bullet, 5);
@@ -33,17 +33,17 @@ public class Prueba_Disparo : MonoBehaviour
             Muzzle.SetActive(false);
         }
     }
-    /*Shoot & Aim*/
+    ///Shoot and Aim
     void Shoot(GameObject bulletType, GameObject originObject)
     {
 
         GameObject m_Bullet2 = ObjectPool.GetObject(bulletType);
         m_Bullet2.transform.position = transform.position;
 
-        //Aiming Direction
+        ///Aiming Direction
         Vector3 direction = originObject.transform.forward;
 
-        //Apply Bullet Speed
+        ///Apply Bullet Speed
         m_Bullet2.GetComponent<Rigidbody>().velocity = direction * m_BulletSpeed;
 
        

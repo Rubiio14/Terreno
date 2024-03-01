@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class Victory_Comprobate : MonoBehaviour
+public class VictoryComprobate : MonoBehaviour
 {
     //Enemies Counter
     [SerializeField]
@@ -21,7 +21,7 @@ public class Victory_Comprobate : MonoBehaviour
     public GameObject m_Player;
     //Canvas
     public GameObject m_VictoryScreen;
-    /*If Enenemies childcount == 0, Shows Victory Canvas*/
+    ///If Enenemies childcount == 0, Shows Victory Canvas
     void Update()
     {
         m_EnemiesLeftLabel.text = transform.childCount.ToString("00") + " Enemies left";
@@ -38,14 +38,14 @@ public class Victory_Comprobate : MonoBehaviour
 
         }
     }
-    /*Reset Button*/
+    ///Reset Button
     public void Reiniciar()
     {
         m_ButtonSound.Play();
         ObjectPool.ClearPool();
         ChangeScene.changeScene(m_SoundDelayTime, 1);
     }
-    /*Main Menu Button*/
+    ///Main Menu Button
     public void MainMenu()
     {
         m_ButtonSound.Play();

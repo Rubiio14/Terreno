@@ -66,17 +66,17 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    /*Chase the player*/
+    ///Chase the player
     void Persecution()
     {
-        // Si el jugador está dentro del rango de visión, persigue al jugador
+        ///If player is in range vision ---> Persecution()
         Vector3 m_PlayerDirection = (m_Player.position - transform.position).normalized;
         transform.position += m_PlayerDirection * m_SpeedPersecution * Time.deltaTime;
 
-        // Rotar hacia el jugador
+        
         transform.LookAt(m_Player);
 
-        // Disparar si se puede
+        
         if (m_canShoot)
         {
             
@@ -86,7 +86,7 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         
     }
-    /*Patrol following a series of waypoints*/
+    ///Patrol following a series of waypoints
     void Patrol()
     {
         if (m_Waypoints.Length == 0) return;
@@ -95,18 +95,18 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 m_WaypointDirection = (m_WaypointTarget.position - transform.position).normalized;
         transform.position += m_WaypointDirection * m_PatrolSpeed * Time.deltaTime;
 
-        // Rotar hacia el waypoint
+        
         Quaternion targetRotation = Quaternion.LookRotation(m_WaypointDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, m_RotationSpeed * Time.deltaTime);
       
-        // Si la nave alcanza el waypoint actual, pasa al siguiente waypoint
+        
         if (Vector3.Distance(transform.position, m_WaypointTarget.position) < 1f)
         {
             m_CurrentWaypointIndex = (m_CurrentWaypointIndex + 1) % m_Waypoints.Length;
 
         }
     }
-    /*Shooting class*/
+    ///Shooting class
     void Shoot()
     {
         m_audioClipShoot.Play();
@@ -119,7 +119,7 @@ public class EnemyBehaviour : MonoBehaviour
         m_Bullet.GetComponent<Rigidbody>().velocity = direction * m_BulletSpeed;
         StartCoroutine(ResetShoot(m_BulletPrefab, m_Bullet, 2.0f));
 
-        //Second Canon
+        ///Second canon
         GameObject m_Bullet_2 = ObjectPool.GetObject(m_BulletPrefab_2); 
         m_Bullet_2.transform.position = m_Muzzle_2.transform.position;
         Vector3 direction_2 = (m_Player.position - m_Muzzle_2.transform.position).normalized;
@@ -137,7 +137,7 @@ public class EnemyBehaviour : MonoBehaviour
         m_canShoot = true;
     }
 
-    /*Damage Info*/
+    ///Damage info
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bala")
@@ -147,7 +147,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    /*Shows Enenmy Vision Range Gizmos in UnityEditor*/
+    ///Shows Enenmy Vision Range Gizmos in UnityEditor
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

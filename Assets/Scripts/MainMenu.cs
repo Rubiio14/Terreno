@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     AudioSource m_ButtonSound;
 
-    //Play Button
+    ///Play Button
     public void Play()
     {
         m_ButtonSound.Play();
@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
         ChangeScene.changeScene(m_SoundDelayTime, 1);       
     }
 
-    //Exit Button
+    ///Exit Button
     public void Quit()
     {
         m_ButtonSound.Play();
