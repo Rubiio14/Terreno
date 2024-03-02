@@ -21,9 +21,10 @@ public class Player_Behavior : MonoBehaviour
     [SerializeField]
     public ParticleSystem m_Explosion;
 
-    //Spawn Point
-    [SerializeField]
-    GameObject m_Spawnpoint; 
+    //AccelerationPowerUp
+    public float m_actualSpeed;
+    public float m_BoostSpeed;
+    public float m_BoostTime;
     //Acceleration
     public float m_NormalSpeed = 50f;
     public float m_Speed = 50f;
@@ -109,7 +110,7 @@ public class Player_Behavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Enemy")
         {
             m_AmbientSound.Stop();
             m_GameOver.Play();
@@ -118,12 +119,28 @@ public class Player_Behavior : MonoBehaviour
             m_Explosion.Play();
             gameEnding.ActivateGameOverScreen();
             Destroy(gameObject);
-            Cursor.lockState = CursorLockMode.None; 
-            
+            Cursor.lockState = CursorLockMode.None;
+
         }
         if (collision.gameObject.tag == "Bala_enemiga")
         {
             m_Health.RecieveHit();
         }
+        
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boost"))
+        {
+            m_actualSpeed = m_Speed;
+            m_Speed = m_Vmax + m_BoostSpeed;
+            StartCoroutine(PowerUpTimer(m_BoostTime));
+        }
+            
+    }
+    IEnumerator PowerUpTimer(float time)
+    { 
+        yield return new WaitForSeconds(time);
+        m_Speed = m_actualSpeed;
     }
 }
