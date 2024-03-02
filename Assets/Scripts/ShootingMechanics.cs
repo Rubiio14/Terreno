@@ -8,7 +8,7 @@ public class ShootingMechanics : MonoBehaviour
     [SerializeField] AudioSource m_ShootingEffect;
     //Muzzle
     [SerializeField] GameObject Muzzle;
-    //Shooting & Aiming
+    //Shooting & Aiming   
     [SerializeField] GameObject m_Bullet;
     [SerializeField] GameObject m_ScopeDirection;
     public float m_BulletSpeed = 10f;
