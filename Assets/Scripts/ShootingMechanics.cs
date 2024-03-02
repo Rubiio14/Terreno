@@ -22,13 +22,13 @@ public class ShootingMechanics : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetButtonDown("Fire1"))
         {
             m_ShootingEffect.Play();
             Muzzle.SetActive(true);
             Shoot(m_Bullet, m_ScopeDirection);
         }
-        else if (Input.GetKeyUp(KeyCode.Z))
+        else if (Input.GetButtonUp("Fire1"))
         {
             Muzzle.SetActive(false);
         }
