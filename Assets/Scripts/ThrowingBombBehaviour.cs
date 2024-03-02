@@ -6,14 +6,18 @@ using UnityEngine;
 public class ThrowingBombBehaviour : MonoBehaviour
 
 {
+    
+
     //Prefabs
     [SerializeField] GameObject m_BombPrefab;
 
     //Bomb
     public float m_BombTimer = 5f;
     public bool m_CanBomb = true;
+    [SerializeField]
+    public AudioSource m_BombSound;
+    
 
-   
     void Start()
     {
         ObjectPool.PreLoad(m_BombPrefab, 1);
@@ -22,9 +26,9 @@ public class ThrowingBombBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && m_CanBomb)
+        if (Input.GetButtonDown("Fire2") && m_CanBomb)
         {
-            //m_ShootingEffect.Play();
+            m_BombSound.Play();
             Shoot(m_BombPrefab);
             m_CanBomb = false;
             StartCoroutine(BombTimer(m_BombTimer));
@@ -59,4 +63,5 @@ public class ThrowingBombBehaviour : MonoBehaviour
         yield return new WaitForSeconds(m_BombTimer);
         m_CanBomb = true;
     }
+
 }
