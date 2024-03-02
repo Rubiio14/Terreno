@@ -138,7 +138,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     ///Damage info
-    void OnTriggerEnter(Collider collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bala")
         {

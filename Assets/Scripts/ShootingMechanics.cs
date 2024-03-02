@@ -22,7 +22,7 @@ public class ShootingMechanics : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             m_ShootingEffect.Play();
             Muzzle.SetActive(true);
