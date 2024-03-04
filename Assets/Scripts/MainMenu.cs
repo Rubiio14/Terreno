@@ -30,8 +30,7 @@ public class MainMenu : MonoBehaviour
     {
 
         yield return new WaitForSeconds(time);
-        UnityEditor.EditorApplication.isPlaying = false;
-        //Application.Quit();
+        Application.Quit();
         
 
     }

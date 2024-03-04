@@ -5,15 +5,16 @@ using UnityEngine;
 public class BombBehaviour : MonoBehaviour
 {
 
-    //PartycleSystem
+    
     void OnCollisionEnter(Collision collision)
     {
-
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Terrain")
+        if (collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Enemy")
         {
-            
+           
             this.gameObject.SetActive(false);
         }
+        
+        
     }
 
 }

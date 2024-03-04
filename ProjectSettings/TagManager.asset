@@ -10,6 +10,7 @@ TagManager:
   - Bala_enemiga
   - Border
   - Bomb
+  - Boost
   layers:
   - Default
   - TransparentFX

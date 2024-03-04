@@ -15,6 +15,7 @@ public class GroundExplosion : MonoBehaviour
 
         if (collision.gameObject.tag == "Bomb")
         {
+            Debug.Log("Entro");
             m_BombFallSound.Stop();
             m_BombExplosion.Play();
             m_Explosion.transform.position = transform.position;

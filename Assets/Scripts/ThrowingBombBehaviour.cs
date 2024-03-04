@@ -14,9 +14,15 @@ public class ThrowingBombBehaviour : MonoBehaviour
     //Bomb
     public float m_BombTimer = 5f;
     public bool m_CanBomb = true;
+    //Audio
     [SerializeField]
     public AudioSource m_BombSound;
-    
+    [SerializeField]
+    public AudioSource m_BombExplosion;
+    //PartycleSystem
+    [SerializeField]
+    public ParticleSystem m_BombExplosionParticles;
+
 
     void Start()
     {
@@ -55,6 +61,10 @@ public class ThrowingBombBehaviour : MonoBehaviour
     IEnumerator RecicleObject(GameObject m_BombPrefab, GameObject m_Bomb2, float time)
     {
         yield return new WaitForSeconds(time);
+        m_BombSound.Stop();
+        m_BombExplosion.Play();
+        m_BombExplosionParticles.transform.position = m_Bomb2.transform.position;
+        m_BombExplosionParticles.Play();
         ObjectPool.RecicleObject(m_BombPrefab, m_Bomb2);
     }
 

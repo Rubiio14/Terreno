@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -41,6 +40,12 @@ public class Player_Behavior : MonoBehaviour
     public GameEnding gameEnding;
     public GameObject player;
 
+    //PowerUP
+    public float m_CurrentSpeed;
+    public float m_BoostSpeed;
+    public float m_BoostTimer;
+    public AudioSource m_PowerUpSound;
+    
 
     private Rigidbody rb;
     
@@ -126,4 +131,21 @@ public class Player_Behavior : MonoBehaviour
             m_Health.RecieveHit();
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Boost")
+        {
+            m_PowerUpSound.Play();
+            m_CurrentSpeed = m_Speed;
+            m_Speed = m_Vmax + m_BoostSpeed;
+            StartCoroutine(PowerUpTimer(m_BoostTimer));
+        }
+    }
+    IEnumerator PowerUpTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        m_Speed = m_CurrentSpeed;
+    }
+
 }
