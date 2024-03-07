@@ -15,14 +15,13 @@ public class Player_Behavior : MonoBehaviour
     public HealthManager m_Health;
     
     //Explosion
+    public GameObject m_Explosion;
+    public int m_Nexplotions;
     [SerializeField]
     AudioSource m_audioClipExplosion;
-    [SerializeField]
-    public ParticleSystem m_Explosion;
-
-    //Spawn Point
-    [SerializeField]
-    GameObject m_Spawnpoint; 
+    //[SerializeField]
+    //public ParticleSystem m_Explosion;
+ 
     //Acceleration
     public float m_NormalSpeed = 50f;
     public float m_Speed = 50f;
@@ -52,6 +51,7 @@ public class Player_Behavior : MonoBehaviour
     
     void Start()
     {
+        ObjectPool.PreLoad(m_Explosion, m_Nexplotions);
         rb = GetComponent<Rigidbody>(); 
         Cursor.lockState = CursorLockMode.Locked;
        
@@ -120,7 +120,10 @@ public class Player_Behavior : MonoBehaviour
             m_GameOver.Play();
             m_audioClipExplosion.Play();
             m_Explosion.transform.position = transform.position;
-            m_Explosion.Play();
+            GameObject m_Explotion2 = ObjectPool.GetObject(m_Explosion);
+            m_Explotion2.transform.position = transform.position;
+            m_Explotion2.GetComponent<ParticleSystem>().Play();
+            StartCoroutine(Explotion_Timer(m_Explosion, m_Explotion2, 2.0f));
             gameEnding.ActivateGameOverScreen();
             Destroy(gameObject);
             Cursor.lockState = CursorLockMode.None; 
@@ -146,6 +149,12 @@ public class Player_Behavior : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         m_Speed = m_CurrentSpeed;
+    }
+    IEnumerator Explotion_Timer(GameObject m_Explosion, GameObject m_Explotion2, float time)
+    {
+        yield return new WaitForSeconds(time);
+        ObjectPool.RecicleObject(m_Explosion, m_Explotion2);
+        ObjectPool.ClearPool();
     }
 
 }

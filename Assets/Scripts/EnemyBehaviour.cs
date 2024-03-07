@@ -74,8 +74,9 @@ public class EnemyBehaviour : MonoBehaviour
         Vector3 m_PlayerDirection = (m_Player.position - transform.position).normalized;
         transform.position += m_PlayerDirection * m_SpeedPersecution * Time.deltaTime;
 
-        
-        transform.LookAt(m_Player);
+        Quaternion targetRotation = Quaternion.LookRotation(m_PlayerDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, m_RotationSpeed * Time.deltaTime);
+        //transform.LookAt(m_Player);
 
         
         if (m_canShoot)
